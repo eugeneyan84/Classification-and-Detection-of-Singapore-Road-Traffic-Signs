@@ -1,0 +1,64 @@
+This tutorial assumes that a debian-based VM has been created and user is currently logged in via SSH.
+
+1) Within Home directory, issue pip command to install Cython. This is to help with pycocotools installation at step-13 onwards.
+pip install cython
+
+2) Create new directory for Tensorflow
+mkdir Tensorflow
+
+3) Enter Tensorflow folder
+cd Tensorflow
+
+4) Git clone the whole tensorflow object detection API
+git clone https://github.com/tensorflow/models
+
+5) Navigate back to Home, then download protocol buffers binary for Linux
+curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/protoc-3.14.0-linux-x86_32.zip
+
+6) Create new directory for protocol buffers
+mkdir protobuf
+
+7) Move download zip file to the new folder created in step-6
+mv protoc-3.14.0-linux-x86_32.zip protobuf/
+
+8) Enter protobuf folder
+cd protobuf
+
+9) Unzip the protobuf zipfile
+unzip protoc-3.14.0-linux-x86_32.zip
+
+10) Copy the protoc binary into the Tensorflow/models/research/ folder
+cp bin/protoc ~/Tensorflow/models/research/
+
+11) Navigate to the Tensorflow/models/research/ folder
+cd ~/Tensorflow/models/research/
+
+12) Convert protos into python scripts with following command
+protoc object_detection/protos/*.proto --python_out=.
+
+13) Navigate back to Home, git clone pycocotools
+git clone https://github.com/cocodataset/cocoapi.git
+
+14) Navigate to PythonAPI folder in the cocoapi folder
+cd cocoapi/PythonAPI/
+
+15) Build the pycocotools
+make
+
+16) After build is successful, copy the pycocotools folder to the ~/Tensorflow/models/research/ folder
+cp -r pycocotools ~/Tensorflow/models/research/
+
+17) Navigate to the Tensorflow/models/research/ folder
+cd ~/Tensorflow/models/research/
+
+18) Copy tf2 setup script to the research folder
+cp object_detection/packages/tf2/setup.py .
+
+19) Use the following command to perform actual installation of object detection API
+python -m pip install .
+
+20) Run sanity check script to verify installation of object detection API
+python object_detection/builders/model_builder_tf2_test.py
+
+21) Follow instructions at [Setting up Chrome Remote Desktop for Linux on Compute Engine] to set up remote-desktop access from local computer to VM instance
+https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine

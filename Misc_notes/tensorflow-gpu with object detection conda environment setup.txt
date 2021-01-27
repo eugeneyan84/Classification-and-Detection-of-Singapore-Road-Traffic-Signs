@@ -1,0 +1,370 @@
+Step 1: create new env
+conda create -n tensorflow pip python=3.8
+
+Step 2: activate newly created env
+conda activate tensorflow
+
+Step 3: Install tensorflow
+pip install --ignore-installed --upgrade tensorflow==2.3.1
+
+Step 4: Sanity check on tensorflow installation
+python -c "import tensorflow as tf;print(tf.reduce_sum(tf.random.normal([1000,1000])))"
+
+Sample log:
+------------------------------------------------------
+2021-01-03 12:19:56.408786: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudart64_101.dll
+2021-01-03 12:20:01.332342: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library nvcuda.dll
+2021-01-03 12:20:01.390507: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 0 with properties:
+pciBusID: 0000:01:00.0 name: GeForce GTX 1080 computeCapability: 6.1
+coreClock: 1.8225GHz coreCount: 20 deviceMemorySize: 8.00GiB deviceMemoryBandwidth: 298.32GiB/s
+2021-01-03 12:20:01.390639: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudart64_101.dll
+2021-01-03 12:20:02.289579: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cublas64_10.dll
+2021-01-03 12:20:02.476731: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cufft64_10.dll
+2021-01-03 12:20:02.613400: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library curand64_10.dll
+2021-01-03 12:20:02.965541: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cusolver64_10.dll
+2021-01-03 12:20:03.247174: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cusparse64_10.dll
+2021-01-03 12:20:03.709150: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudnn64_7.dll
+2021-01-03 12:20:03.709465: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1703] Adding visible gpu devices: 0
+2021-01-03 12:20:03.710874: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+2021-01-03 12:20:03.718784: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x13c2254b130 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-01-03 12:20:03.719419: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-01-03 12:20:03.720050: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 0 with properties:
+pciBusID: 0000:01:00.0 name: GeForce GTX 1080 computeCapability: 6.1
+coreClock: 1.8225GHz coreCount: 20 deviceMemorySize: 8.00GiB deviceMemoryBandwidth: 298.32GiB/s
+2021-01-03 12:20:03.720251: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudart64_101.dll
+2021-01-03 12:20:03.720607: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cublas64_10.dll
+2021-01-03 12:20:03.721062: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cufft64_10.dll
+2021-01-03 12:20:03.721119: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library curand64_10.dll
+2021-01-03 12:20:03.721174: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cusolver64_10.dll
+2021-01-03 12:20:03.721230: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cusparse64_10.dll
+2021-01-03 12:20:03.721285: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library cudnn64_7.dll
+2021-01-03 12:20:03.721384: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1703] Adding visible gpu devices: 0
+2021-01-03 12:20:04.956715: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1102] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-01-03 12:20:04.956861: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1108]      0
+2021-01-03 12:20:04.957627: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1121] 0:   N
+2021-01-03 12:20:04.957940: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1247] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 6697 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:01:00.0, compute capability: 6.1)
+2021-01-03 12:20:04.968877: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x13c4644c9c0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-01-03 12:20:04.969012: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): GeForce GTX 1080, Compute Capability 6.1
+tf.Tensor(-629.5879, shape=(), dtype=float32)
+------------------------------------------------------
+
+Step 5: Install Cython
+pip install cython
+
+Step 6: Install pycocotools
+pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
+
+Step 7: Navigate to tensorflow research folder
+cd Tensorflow/models/research
+
+Step 8: Copy object detection setup script to the research folder level
+cp object_detection/packages/tf2/setup.py .
+
+Step 9: Perform installation (Tensorflow likely get upgraded to 2.4.0. Can perform manual downgrade later by re-attempting step 3 so as to utilise GPU)
+python -m pip install .
+
+Step 10: Sanity check on object detection installation
+python object_detection/builders/model_builder_tf2_test.py
+
+Sample log:
+------------------------------------------------------
+
+------------------------------------------------------
+
+Step 11: Install jupyter
+pip install jupyter
+
+Step 12: Navigate to anaconda3\Lib\site-packages\pywin32_system32 folder, copy pythoncom38.dll and pywintypes38.dll to Windows System32 folder
+
+Step 13: Launch jupyter-notebook
+jupyter-notebook
+
+Step 14: Run TF2_saved_model notebook for sanity check on entire load-and-infer procedure
+
+Step 15: If tensorflow is still at wrong version, force it to 2.3.1
+pip install tensorflow==2.3.1
+
+Step 16: Run object detection sanity check again
+python object_detection/builders/model_builder_tf2_test.py
+
+Sample log:
+------------------------------------------------------
+2021-01-03 19:16:20.673569: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cudart64_101.dll
+Running tests under Python 3.8.5: C:\Users\User\anaconda3\envs\tensorflow\python.exe
+[ RUN      ] ModelBuilderTF2Test.test_create_center_net_model
+2021-01-03 19:16:41.685758: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library nvcuda.dll
+2021-01-03 19:16:41.715296: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties:
+pciBusID: 0000:01:00.0 name: GeForce GTX 1080 computeCapability: 6.1
+coreClock: 1.8225GHz coreCount: 20 deviceMemorySize: 8.00GiB deviceMemoryBandwidth: 298.32GiB/s
+2021-01-03 19:16:41.715445: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cudart64_101.dll
+2021-01-03 19:16:42.098062: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cublas64_10.dll
+2021-01-03 19:16:42.117796: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cufft64_10.dll
+2021-01-03 19:16:42.142564: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library curand64_10.dll
+2021-01-03 19:16:42.174601: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cusolver64_10.dll
+2021-01-03 19:16:42.228117: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cusparse64_10.dll
+2021-01-03 19:16:42.473599: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cudnn64_7.dll
+2021-01-03 19:16:42.473820: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-01-03 19:16:42.474414: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN)to use the following CPU instructions in performance-critical operations:  AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-01-03 19:16:42.482210: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x2ca64fcc3d0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-01-03 19:16:42.482314: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-01-03 19:16:42.483077: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties:
+pciBusID: 0000:01:00.0 name: GeForce GTX 1080 computeCapability: 6.1
+coreClock: 1.8225GHz coreCount: 20 deviceMemorySize: 8.00GiB deviceMemoryBandwidth: 298.32GiB/s
+2021-01-03 19:16:42.483195: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cudart64_101.dll
+2021-01-03 19:16:42.483295: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cublas64_10.dll
+2021-01-03 19:16:42.483443: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cufft64_10.dll
+2021-01-03 19:16:42.483882: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library curand64_10.dll
+2021-01-03 19:16:42.484561: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cusolver64_10.dll
+2021-01-03 19:16:42.484988: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cusparse64_10.dll
+2021-01-03 19:16:42.485435: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library cudnn64_7.dll
+2021-01-03 19:16:42.485917: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-01-03 19:16:43.179437: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-01-03 19:16:43.179534: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0
+2021-01-03 19:16:43.180994: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N
+2021-01-03 19:16:43.181630: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 6692 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080, pci bus id: 0000:01:00.0, compute capability: 6.1)
+2021-01-03 19:16:43.184748: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x2ca0dc4afe0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-01-03 19:16:43.184823: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): GeForce GTX 1080, Compute Capability 6.1
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_center_net_model): 10.61s
+I0103 19:16:50.318798 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_center_net_model): 10.61s
+[       OK ] ModelBuilderTF2Test.test_create_center_net_model
+[ RUN      ] ModelBuilderTF2Test.test_create_experimental_model
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_experimental_model): 0.0s
+I0103 19:16:50.321693 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_experimental_model): 0.0s
+[       OK ] ModelBuilderTF2Test.test_create_experimental_model
+[ RUN      ] ModelBuilderTF2Test.test_create_faster_rcnn_from_config_with_crop_feature0 (True)
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_from_config_with_crop_feature0 (True)): 0.02s
+I0103 19:16:50.342782 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_from_config_with_crop_feature0 (True)): 0.02s
+[       OK ] ModelBuilderTF2Test.test_create_faster_rcnn_from_config_with_crop_feature0 (True)
+[ RUN      ] ModelBuilderTF2Test.test_create_faster_rcnn_from_config_with_crop_feature1 (False)
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_from_config_with_crop_feature1 (False)): 0.02s
+I0103 19:16:50.364282 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_from_config_with_crop_feature1 (False)): 0.02s
+[       OK ] ModelBuilderTF2Test.test_create_faster_rcnn_from_config_with_crop_feature1 (False)
+[ RUN      ] ModelBuilderTF2Test.test_create_faster_rcnn_model_from_config_with_example_miner
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_model_from_config_with_example_miner): 0.02s
+I0103 19:16:50.384749 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_model_from_config_with_example_miner): 0.02s
+[       OK ] ModelBuilderTF2Test.test_create_faster_rcnn_model_from_config_with_example_miner
+[ RUN      ] ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_faster_rcnn_with_matmul
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_faster_rcnn_with_matmul): 0.11s
+I0103 19:16:50.501866 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_faster_rcnn_with_matmul): 0.11s
+[       OK ] ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_faster_rcnn_with_matmul
+[ RUN      ] ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_faster_rcnn_without_matmul
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_faster_rcnn_without_matmul): 0.11s
+I0103 19:16:50.618014 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_faster_rcnn_without_matmul): 0.11s
+[       OK ] ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_faster_rcnn_without_matmul
+[ RUN      ] ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_mask_rcnn_with_matmul
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_mask_rcnn_with_matmul): 0.12s
+I0103 19:16:50.744862 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_mask_rcnn_with_matmul): 0.12s
+[       OK ] ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_mask_rcnn_with_matmul
+[ RUN      ] ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_mask_rcnn_without_matmul
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_mask_rcnn_without_matmul): 0.12s
+I0103 19:16:50.867839 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_mask_rcnn_without_matmul): 0.12s
+[       OK ] ModelBuilderTF2Test.test_create_faster_rcnn_models_from_config_mask_rcnn_without_matmul
+[ RUN      ] ModelBuilderTF2Test.test_create_rfcn_model_from_config
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_rfcn_model_from_config): 0.12s
+I0103 19:16:50.992766 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_rfcn_model_from_config): 0.12s
+[       OK ] ModelBuilderTF2Test.test_create_rfcn_model_from_config
+[ RUN      ] ModelBuilderTF2Test.test_create_ssd_fpn_model_from_config
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_ssd_fpn_model_from_config): 0.03s
+I0103 19:16:51.026954 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_ssd_fpn_model_from_config): 0.03s
+[       OK ] ModelBuilderTF2Test.test_create_ssd_fpn_model_from_config
+[ RUN      ] ModelBuilderTF2Test.test_create_ssd_models_from_config
+I0103 19:16:51.245575 10040 ssd_efficientnet_bifpn_feature_extractor.py:143] EfficientDet EfficientNet backbone version: efficientnet-b0
+I0103 19:16:51.245575 10040 ssd_efficientnet_bifpn_feature_extractor.py:145] EfficientDet BiFPN num filters: 64
+I0103 19:16:51.247503 10040 ssd_efficientnet_bifpn_feature_extractor.py:146] EfficientDet BiFPN num iterations: 3
+I0103 19:16:51.252383 10040 efficientnet_model.py:148] round_filter input=32 output=32
+I0103 19:16:51.281687 10040 efficientnet_model.py:148] round_filter input=32 output=32
+I0103 19:16:51.281687 10040 efficientnet_model.py:148] round_filter input=16 output=16
+I0103 19:16:51.363674 10040 efficientnet_model.py:148] round_filter input=16 output=16
+I0103 19:16:51.363674 10040 efficientnet_model.py:148] round_filter input=24 output=24
+I0103 19:16:51.590079 10040 efficientnet_model.py:148] round_filter input=24 output=24
+I0103 19:16:51.590079 10040 efficientnet_model.py:148] round_filter input=40 output=40
+I0103 19:16:51.812138 10040 efficientnet_model.py:148] round_filter input=40 output=40
+I0103 19:16:51.812138 10040 efficientnet_model.py:148] round_filter input=80 output=80
+I0103 19:16:52.280936 10040 efficientnet_model.py:148] round_filter input=80 output=80
+I0103 19:16:52.280936 10040 efficientnet_model.py:148] round_filter input=112 output=112
+I0103 19:16:52.623743 10040 efficientnet_model.py:148] round_filter input=112 output=112
+I0103 19:16:52.623743 10040 efficientnet_model.py:148] round_filter input=192 output=192
+I0103 19:16:53.080957 10040 efficientnet_model.py:148] round_filter input=192 output=192
+I0103 19:16:53.080957 10040 efficientnet_model.py:148] round_filter input=320 output=320
+I0103 19:16:53.185731 10040 efficientnet_model.py:148] round_filter input=1280 output=1280
+I0103 19:16:53.230627 10040 efficientnet_model.py:460] Building model efficientnet with params ModelConfig(width_coefficient=1.0, depth_coefficient=1.0, resolution=224, dropout_rate=0.2, blocks=(BlockConfig(input_filters=32, output_filters=16, kernel_size=3, num_repeat=1, expand_ratio=1, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=16, output_filters=24, kernel_size=3, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=24, output_filters=40, kernel_size=5, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=40, output_filters=80, kernel_size=3, num_repeat=3, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=80, output_filters=112, kernel_size=5, num_repeat=3, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=112, output_filters=192, kernel_size=5, num_repeat=4, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=192, output_filters=320, kernel_size=3, num_repeat=1, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise')), stem_base_filters=32, top_base_filters=1280, activation='simple_swish', batch_norm='default', bn_momentum=0.99, bn_epsilon=0.001, weight_decay=5e-06, drop_connect_rate=0.2, depth_divisor=8, min_depth=None, use_se=True, input_channels=3, num_classes=1000, model_name='efficientnet', rescale_input=False, data_format='channels_last', dtype='float32')
+I0103 19:16:53.301875 10040 ssd_efficientnet_bifpn_feature_extractor.py:143] EfficientDet EfficientNet backbone version: efficientnet-b1
+I0103 19:16:53.301875 10040 ssd_efficientnet_bifpn_feature_extractor.py:145] EfficientDet BiFPN num filters: 88
+I0103 19:16:53.302824 10040 ssd_efficientnet_bifpn_feature_extractor.py:146] EfficientDet BiFPN num iterations: 4
+I0103 19:16:53.307704 10040 efficientnet_model.py:148] round_filter input=32 output=32
+I0103 19:16:53.335059 10040 efficientnet_model.py:148] round_filter input=32 output=32
+I0103 19:16:53.335059 10040 efficientnet_model.py:148] round_filter input=16 output=16
+I0103 19:16:53.512664 10040 efficientnet_model.py:148] round_filter input=16 output=16
+I0103 19:16:53.512664 10040 efficientnet_model.py:148] round_filter input=24 output=24
+I0103 19:16:53.856215 10040 efficientnet_model.py:148] round_filter input=24 output=24
+I0103 19:16:53.856215 10040 efficientnet_model.py:148] round_filter input=40 output=40
+I0103 19:16:54.203671 10040 efficientnet_model.py:148] round_filter input=40 output=40
+I0103 19:16:54.203671 10040 efficientnet_model.py:148] round_filter input=80 output=80
+I0103 19:16:54.666415 10040 efficientnet_model.py:148] round_filter input=80 output=80
+I0103 19:16:54.666415 10040 efficientnet_model.py:148] round_filter input=112 output=112
+I0103 19:16:55.124789 10040 efficientnet_model.py:148] round_filter input=112 output=112
+I0103 19:16:55.124789 10040 efficientnet_model.py:148] round_filter input=192 output=192
+I0103 19:16:55.857765 10040 efficientnet_model.py:148] round_filter input=192 output=192
+I0103 19:16:55.858741 10040 efficientnet_model.py:148] round_filter input=320 output=320
+I0103 19:16:56.082245 10040 efficientnet_model.py:148] round_filter input=1280 output=1280
+I0103 19:16:56.127142 10040 efficientnet_model.py:460] Building model efficientnet with params ModelConfig(width_coefficient=1.0, depth_coefficient=1.1, resolution=240, dropout_rate=0.2, blocks=(BlockConfig(input_filters=32, output_filters=16, kernel_size=3, num_repeat=1, expand_ratio=1, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=16, output_filters=24, kernel_size=3, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=24, output_filters=40, kernel_size=5, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=40, output_filters=80, kernel_size=3, num_repeat=3, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=80, output_filters=112, kernel_size=5, num_repeat=3, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=112, output_filters=192, kernel_size=5, num_repeat=4, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=192, output_filters=320, kernel_size=3, num_repeat=1, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise')), stem_base_filters=32, top_base_filters=1280, activation='simple_swish', batch_norm='default', bn_momentum=0.99, bn_epsilon=0.001, weight_decay=5e-06, drop_connect_rate=0.2, depth_divisor=8, min_depth=None, use_se=True, input_channels=3, num_classes=1000, model_name='efficientnet', rescale_input=False, data_format='channels_last', dtype='float32')
+I0103 19:16:56.212053 10040 ssd_efficientnet_bifpn_feature_extractor.py:143] EfficientDet EfficientNet backbone version: efficientnet-b2
+I0103 19:16:56.213029 10040 ssd_efficientnet_bifpn_feature_extractor.py:145] EfficientDet BiFPN num filters: 112
+I0103 19:16:56.214034 10040 ssd_efficientnet_bifpn_feature_extractor.py:146] EfficientDet BiFPN num iterations: 5
+I0103 19:16:56.218886 10040 efficientnet_model.py:148] round_filter input=32 output=32
+I0103 19:16:56.249170 10040 efficientnet_model.py:148] round_filter input=32 output=32
+I0103 19:16:56.249170 10040 efficientnet_model.py:148] round_filter input=16 output=16
+I0103 19:16:56.426803 10040 efficientnet_model.py:148] round_filter input=16 output=16
+I0103 19:16:56.427780 10040 efficientnet_model.py:148] round_filter input=24 output=24
+I0103 19:16:56.763150 10040 efficientnet_model.py:148] round_filter input=24 output=24
+I0103 19:16:56.763150 10040 efficientnet_model.py:148] round_filter input=40 output=48
+I0103 19:16:57.098905 10040 efficientnet_model.py:148] round_filter input=40 output=48
+I0103 19:16:57.098905 10040 efficientnet_model.py:148] round_filter input=80 output=88
+I0103 19:16:57.549845 10040 efficientnet_model.py:148] round_filter input=80 output=88
+I0103 19:16:57.550821 10040 efficientnet_model.py:148] round_filter input=112 output=120
+I0103 19:16:58.007562 10040 efficientnet_model.py:148] round_filter input=112 output=120
+I0103 19:16:58.007562 10040 efficientnet_model.py:148] round_filter input=192 output=208
+I0103 19:16:58.579936 10040 efficientnet_model.py:148] round_filter input=192 output=208
+I0103 19:16:58.580912 10040 efficientnet_model.py:148] round_filter input=320 output=352
+I0103 19:16:58.800511 10040 efficientnet_model.py:148] round_filter input=1280 output=1408
+I0103 19:16:58.843483 10040 efficientnet_model.py:460] Building model efficientnet with params ModelConfig(width_coefficient=1.1, depth_coefficient=1.2, resolution=260, dropout_rate=0.3, blocks=(BlockConfig(input_filters=32, output_filters=16, kernel_size=3, num_repeat=1, expand_ratio=1, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=16, output_filters=24, kernel_size=3, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=24, output_filters=40, kernel_size=5, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=40, output_filters=80, kernel_size=3, num_repeat=3, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=80, output_filters=112, kernel_size=5, num_repeat=3, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=112, output_filters=192, kernel_size=5, num_repeat=4, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=192, output_filters=320, kernel_size=3, num_repeat=1, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise')), stem_base_filters=32, top_base_filters=1280, activation='simple_swish', batch_norm='default', bn_momentum=0.99, bn_epsilon=0.001, weight_decay=5e-06, drop_connect_rate=0.2, depth_divisor=8, min_depth=None, use_se=True, input_channels=3, num_classes=1000, model_name='efficientnet', rescale_input=False, data_format='channels_last', dtype='float32')
+I0103 19:16:58.926415 10040 ssd_efficientnet_bifpn_feature_extractor.py:143] EfficientDet EfficientNet backbone version: efficientnet-b3
+I0103 19:16:58.926415 10040 ssd_efficientnet_bifpn_feature_extractor.py:145] EfficientDet BiFPN num filters: 160
+I0103 19:16:58.928367 10040 ssd_efficientnet_bifpn_feature_extractor.py:146] EfficientDet BiFPN num iterations: 6
+I0103 19:16:58.932271 10040 efficientnet_model.py:148] round_filter input=32 output=40
+I0103 19:16:58.959600 10040 efficientnet_model.py:148] round_filter input=32 output=40
+I0103 19:16:58.959600 10040 efficientnet_model.py:148] round_filter input=16 output=24
+I0103 19:16:59.128809 10040 efficientnet_model.py:148] round_filter input=16 output=24
+I0103 19:16:59.128809 10040 efficientnet_model.py:148] round_filter input=24 output=32
+I0103 19:16:59.700716 10040 efficientnet_model.py:148] round_filter input=24 output=32
+I0103 19:16:59.700716 10040 efficientnet_model.py:148] round_filter input=40 output=48
+I0103 19:17:00.034536 10040 efficientnet_model.py:148] round_filter input=40 output=48
+I0103 19:17:00.034536 10040 efficientnet_model.py:148] round_filter input=80 output=96
+I0103 19:17:00.605324 10040 efficientnet_model.py:148] round_filter input=80 output=96
+I0103 19:17:00.606273 10040 efficientnet_model.py:148] round_filter input=112 output=136
+I0103 19:17:01.179250 10040 efficientnet_model.py:148] round_filter input=112 output=136
+I0103 19:17:01.179250 10040 efficientnet_model.py:148] round_filter input=192 output=232
+I0103 19:17:01.916610 10040 efficientnet_model.py:148] round_filter input=192 output=232
+I0103 19:17:01.916610 10040 efficientnet_model.py:148] round_filter input=320 output=384
+I0103 19:17:02.149873 10040 efficientnet_model.py:148] round_filter input=1280 output=1536
+I0103 19:17:02.193794 10040 efficientnet_model.py:460] Building model efficientnet with params ModelConfig(width_coefficient=1.2, depth_coefficient=1.4, resolution=300, dropout_rate=0.3, blocks=(BlockConfig(input_filters=32, output_filters=16, kernel_size=3, num_repeat=1, expand_ratio=1, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=16, output_filters=24, kernel_size=3, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=24, output_filters=40, kernel_size=5, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=40, output_filters=80, kernel_size=3, num_repeat=3, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=80, output_filters=112, kernel_size=5, num_repeat=3, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=112, output_filters=192, kernel_size=5, num_repeat=4, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=192, output_filters=320, kernel_size=3, num_repeat=1, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise')), stem_base_filters=32, top_base_filters=1280, activation='simple_swish', batch_norm='default', bn_momentum=0.99, bn_epsilon=0.001, weight_decay=5e-06, drop_connect_rate=0.2, depth_divisor=8, min_depth=None, use_se=True, input_channels=3, num_classes=1000, model_name='efficientnet', rescale_input=False, data_format='channels_last', dtype='float32')
+I0103 19:17:02.283586 10040 ssd_efficientnet_bifpn_feature_extractor.py:143] EfficientDet EfficientNet backbone version: efficientnet-b4
+I0103 19:17:02.284570 10040 ssd_efficientnet_bifpn_feature_extractor.py:145] EfficientDet BiFPN num filters: 224
+I0103 19:17:02.285537 10040 ssd_efficientnet_bifpn_feature_extractor.py:146] EfficientDet BiFPN num iterations: 7
+I0103 19:17:02.290418 10040 efficientnet_model.py:148] round_filter input=32 output=48
+I0103 19:17:02.316770 10040 efficientnet_model.py:148] round_filter input=32 output=48
+I0103 19:17:02.317774 10040 efficientnet_model.py:148] round_filter input=16 output=24
+I0103 19:17:02.486593 10040 efficientnet_model.py:148] round_filter input=16 output=24
+I0103 19:17:02.487569 10040 efficientnet_model.py:148] round_filter input=24 output=32
+I0103 19:17:02.975605 10040 efficientnet_model.py:148] round_filter input=24 output=32
+I0103 19:17:02.975605 10040 efficientnet_model.py:148] round_filter input=40 output=56
+I0103 19:17:03.435858 10040 efficientnet_model.py:148] round_filter input=40 output=56
+I0103 19:17:03.435858 10040 efficientnet_model.py:148] round_filter input=80 output=112
+I0103 19:17:04.417742 10040 efficientnet_model.py:148] round_filter input=80 output=112
+I0103 19:17:04.417742 10040 efficientnet_model.py:148] round_filter input=112 output=160
+I0103 19:17:05.138613 10040 efficientnet_model.py:148] round_filter input=112 output=160
+I0103 19:17:05.138613 10040 efficientnet_model.py:148] round_filter input=192 output=272
+I0103 19:17:06.113479 10040 efficientnet_model.py:148] round_filter input=192 output=272
+I0103 19:17:06.113479 10040 efficientnet_model.py:148] round_filter input=320 output=448
+I0103 19:17:06.346743 10040 efficientnet_model.py:148] round_filter input=1280 output=1792
+I0103 19:17:06.391640 10040 efficientnet_model.py:460] Building model efficientnet with params ModelConfig(width_coefficient=1.4, depth_coefficient=1.8, resolution=380, dropout_rate=0.4, blocks=(BlockConfig(input_filters=32, output_filters=16, kernel_size=3, num_repeat=1, expand_ratio=1, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=16, output_filters=24, kernel_size=3, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=24, output_filters=40, kernel_size=5, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=40, output_filters=80, kernel_size=3, num_repeat=3, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=80, output_filters=112, kernel_size=5, num_repeat=3, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=112, output_filters=192, kernel_size=5, num_repeat=4, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=192, output_filters=320, kernel_size=3, num_repeat=1, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise')), stem_base_filters=32, top_base_filters=1280, activation='simple_swish', batch_norm='default', bn_momentum=0.99, bn_epsilon=0.001, weight_decay=5e-06, drop_connect_rate=0.2, depth_divisor=8, min_depth=None, use_se=True, input_channels=3, num_classes=1000, model_name='efficientnet', rescale_input=False, data_format='channels_last', dtype='float32')
+I0103 19:17:06.494119 10040 ssd_efficientnet_bifpn_feature_extractor.py:143] EfficientDet EfficientNet backbone version: efficientnet-b5
+I0103 19:17:06.494119 10040 ssd_efficientnet_bifpn_feature_extractor.py:145] EfficientDet BiFPN num filters: 288
+I0103 19:17:06.496072 10040 ssd_efficientnet_bifpn_feature_extractor.py:146] EfficientDet BiFPN num iterations: 7
+I0103 19:17:06.500951 10040 efficientnet_model.py:148] round_filter input=32 output=48
+I0103 19:17:06.531208 10040 efficientnet_model.py:148] round_filter input=32 output=48
+I0103 19:17:06.531208 10040 efficientnet_model.py:148] round_filter input=16 output=24
+I0103 19:17:06.831843 10040 efficientnet_model.py:148] round_filter input=16 output=24
+I0103 19:17:06.831843 10040 efficientnet_model.py:148] round_filter input=24 output=40
+I0103 19:17:07.415498 10040 efficientnet_model.py:148] round_filter input=24 output=40
+I0103 19:17:07.415498 10040 efficientnet_model.py:148] round_filter input=40 output=64
+I0103 19:17:08.023511 10040 efficientnet_model.py:148] round_filter input=40 output=64
+I0103 19:17:08.023511 10040 efficientnet_model.py:148] round_filter input=80 output=128
+I0103 19:17:08.855173 10040 efficientnet_model.py:148] round_filter input=80 output=128
+I0103 19:17:08.856149 10040 efficientnet_model.py:148] round_filter input=112 output=176
+I0103 19:17:09.674039 10040 efficientnet_model.py:148] round_filter input=112 output=176
+I0103 19:17:09.674039 10040 efficientnet_model.py:148] round_filter input=192 output=304
+I0103 19:17:11.082979 10040 efficientnet_model.py:148] round_filter input=192 output=304
+I0103 19:17:11.082979 10040 efficientnet_model.py:148] round_filter input=320 output=512
+I0103 19:17:11.423632 10040 efficientnet_model.py:148] round_filter input=1280 output=2048
+I0103 19:17:11.467552 10040 efficientnet_model.py:460] Building model efficientnet with params ModelConfig(width_coefficient=1.6, depth_coefficient=2.2, resolution=456, dropout_rate=0.4, blocks=(BlockConfig(input_filters=32, output_filters=16, kernel_size=3, num_repeat=1, expand_ratio=1, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=16, output_filters=24, kernel_size=3, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=24, output_filters=40, kernel_size=5, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=40, output_filters=80, kernel_size=3, num_repeat=3, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=80, output_filters=112, kernel_size=5, num_repeat=3, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=112, output_filters=192, kernel_size=5, num_repeat=4, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=192, output_filters=320, kernel_size=3, num_repeat=1, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise')), stem_base_filters=32, top_base_filters=1280, activation='simple_swish', batch_norm='default', bn_momentum=0.99, bn_epsilon=0.001, weight_decay=5e-06, drop_connect_rate=0.2, depth_divisor=8, min_depth=None, use_se=True, input_channels=3, num_classes=1000, model_name='efficientnet', rescale_input=False, data_format='channels_last', dtype='float32')
+I0103 19:17:11.591476 10040 ssd_efficientnet_bifpn_feature_extractor.py:143] EfficientDet EfficientNet backbone version: efficientnet-b6
+I0103 19:17:11.591476 10040 ssd_efficientnet_bifpn_feature_extractor.py:145] EfficientDet BiFPN num filters: 384
+I0103 19:17:11.594403 10040 ssd_efficientnet_bifpn_feature_extractor.py:146] EfficientDet BiFPN num iterations: 8
+I0103 19:17:11.600259 10040 efficientnet_model.py:148] round_filter input=32 output=56
+I0103 19:17:11.628564 10040 efficientnet_model.py:148] round_filter input=32 output=56
+I0103 19:17:11.628564 10040 efficientnet_model.py:148] round_filter input=16 output=32
+I0103 19:17:11.918436 10040 efficientnet_model.py:148] round_filter input=16 output=32
+I0103 19:17:11.919411 10040 efficientnet_model.py:148] round_filter input=24 output=40
+I0103 19:17:12.619997 10040 efficientnet_model.py:148] round_filter input=24 output=40
+I0103 19:17:12.619997 10040 efficientnet_model.py:148] round_filter input=40 output=72
+I0103 19:17:13.336831 10040 efficientnet_model.py:148] round_filter input=40 output=72
+I0103 19:17:13.336831 10040 efficientnet_model.py:148] round_filter input=80 output=144
+I0103 19:17:14.297753 10040 efficientnet_model.py:148] round_filter input=80 output=144
+I0103 19:17:14.297753 10040 efficientnet_model.py:148] round_filter input=112 output=200
+I0103 19:17:15.266596 10040 efficientnet_model.py:148] round_filter input=112 output=200
+I0103 19:17:15.266596 10040 efficientnet_model.py:148] round_filter input=192 output=344
+I0103 19:17:16.584218 10040 efficientnet_model.py:148] round_filter input=192 output=344
+I0103 19:17:16.585193 10040 efficientnet_model.py:148] round_filter input=320 output=576
+I0103 19:17:16.954756 10040 efficientnet_model.py:148] round_filter input=1280 output=2304
+I0103 19:17:17.002580 10040 efficientnet_model.py:460] Building model efficientnet with params ModelConfig(width_coefficient=1.8, depth_coefficient=2.6, resolution=528, dropout_rate=0.5, blocks=(BlockConfig(input_filters=32, output_filters=16, kernel_size=3, num_repeat=1, expand_ratio=1, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=16, output_filters=24, kernel_size=3, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=24, output_filters=40, kernel_size=5, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=40, output_filters=80, kernel_size=3, num_repeat=3, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=80, output_filters=112, kernel_size=5, num_repeat=3, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=112, output_filters=192, kernel_size=5, num_repeat=4, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=192, output_filters=320, kernel_size=3, num_repeat=1, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise')), stem_base_filters=32, top_base_filters=1280, activation='simple_swish', batch_norm='default', bn_momentum=0.99, bn_epsilon=0.001, weight_decay=5e-06, drop_connect_rate=0.2, depth_divisor=8, min_depth=None, use_se=True, input_channels=3, num_classes=1000, model_name='efficientnet', rescale_input=False, data_format='channels_last', dtype='float32')
+I0103 19:17:17.147031 10040 ssd_efficientnet_bifpn_feature_extractor.py:143] EfficientDet EfficientNet backbone version: efficientnet-b7
+I0103 19:17:17.147031 10040 ssd_efficientnet_bifpn_feature_extractor.py:145] EfficientDet BiFPN num filters: 384
+I0103 19:17:17.148007 10040 ssd_efficientnet_bifpn_feature_extractor.py:146] EfficientDet BiFPN num iterations: 8
+I0103 19:17:17.152887 10040 efficientnet_model.py:148] round_filter input=32 output=64
+I0103 19:17:17.181191 10040 efficientnet_model.py:148] round_filter input=32 output=64
+I0103 19:17:17.181191 10040 efficientnet_model.py:148] round_filter input=16 output=32
+I0103 19:17:17.528679 10040 efficientnet_model.py:148] round_filter input=16 output=32
+I0103 19:17:17.528679 10040 efficientnet_model.py:148] round_filter input=24 output=48
+I0103 19:17:18.769675 10040 efficientnet_model.py:148] round_filter input=24 output=48
+I0103 19:17:18.769675 10040 efficientnet_model.py:148] round_filter input=40 output=80
+I0103 19:17:19.609034 10040 efficientnet_model.py:148] round_filter input=40 output=80
+I0103 19:17:19.609034 10040 efficientnet_model.py:148] round_filter input=80 output=160
+I0103 19:17:20.817852 10040 efficientnet_model.py:148] round_filter input=80 output=160
+I0103 19:17:20.817852 10040 efficientnet_model.py:148] round_filter input=112 output=224
+I0103 19:17:22.019282 10040 efficientnet_model.py:148] round_filter input=112 output=224
+I0103 19:17:22.019282 10040 efficientnet_model.py:148] round_filter input=192 output=384
+I0103 19:17:23.597993 10040 efficientnet_model.py:148] round_filter input=192 output=384
+I0103 19:17:23.597993 10040 efficientnet_model.py:148] round_filter input=320 output=640
+I0103 19:17:24.089971 10040 efficientnet_model.py:148] round_filter input=1280 output=2560
+I0103 19:17:24.134867 10040 efficientnet_model.py:460] Building model efficientnet with params ModelConfig(width_coefficient=2.0, depth_coefficient=3.1, resolution=600, dropout_rate=0.5, blocks=(BlockConfig(input_filters=32, output_filters=16, kernel_size=3, num_repeat=1, expand_ratio=1, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=16, output_filters=24, kernel_size=3, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=24, output_filters=40, kernel_size=5, num_repeat=2, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=40, output_filters=80, kernel_size=3, num_repeat=3, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=80, output_filters=112, kernel_size=5, num_repeat=3, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=112, output_filters=192, kernel_size=5, num_repeat=4, expand_ratio=6, strides=(2, 2), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise'), BlockConfig(input_filters=192, output_filters=320, kernel_size=3, num_repeat=1, expand_ratio=6, strides=(1, 1), se_ratio=0.25, id_skip=True, fused_conv=False, conv_type='depthwise')), stem_base_filters=32, top_base_filters=1280, activation='simple_swish', batch_norm='default', bn_momentum=0.99, bn_epsilon=0.001, weight_decay=5e-06, drop_connect_rate=0.2, depth_divisor=8, min_depth=None, use_se=True, input_channels=3, num_classes=1000, model_name='efficientnet', rescale_input=False, data_format='channels_last', dtype='float32')
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_create_ssd_models_from_config): 33.27s
+I0103 19:17:24.293955 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_create_ssd_models_from_config): 33.27s
+[       OK ] ModelBuilderTF2Test.test_create_ssd_models_from_config
+[ RUN      ] ModelBuilderTF2Test.test_invalid_faster_rcnn_batchnorm_update
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_invalid_faster_rcnn_batchnorm_update): 0.0s
+I0103 19:17:24.303715 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_invalid_faster_rcnn_batchnorm_update): 0.0s
+[       OK ] ModelBuilderTF2Test.test_invalid_faster_rcnn_batchnorm_update
+[ RUN      ] ModelBuilderTF2Test.test_invalid_first_stage_nms_iou_threshold
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_invalid_first_stage_nms_iou_threshold): 0.0s
+I0103 19:17:24.308595 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_invalid_first_stage_nms_iou_threshold): 0.0s
+[       OK ] ModelBuilderTF2Test.test_invalid_first_stage_nms_iou_threshold
+[ RUN      ] ModelBuilderTF2Test.test_invalid_model_config_proto
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_invalid_model_config_proto): 0.0s
+I0103 19:17:24.310548 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_invalid_model_config_proto): 0.0s
+[       OK ] ModelBuilderTF2Test.test_invalid_model_config_proto
+[ RUN      ] ModelBuilderTF2Test.test_invalid_second_stage_batch_size
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_invalid_second_stage_batch_size): 0.0s
+I0103 19:17:24.314451 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_invalid_second_stage_batch_size): 0.0s
+[       OK ] ModelBuilderTF2Test.test_invalid_second_stage_batch_size
+[ RUN      ] ModelBuilderTF2Test.test_session
+[  SKIPPED ] ModelBuilderTF2Test.test_session
+[ RUN      ] ModelBuilderTF2Test.test_unknown_faster_rcnn_feature_extractor
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_unknown_faster_rcnn_feature_extractor): 0.0s
+I0103 19:17:24.319331 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_unknown_faster_rcnn_feature_extractor): 0.0s
+[       OK ] ModelBuilderTF2Test.test_unknown_faster_rcnn_feature_extractor
+[ RUN      ] ModelBuilderTF2Test.test_unknown_meta_architecture
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_unknown_meta_architecture): 0.0s
+I0103 19:17:24.321283 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_unknown_meta_architecture): 0.0s
+[       OK ] ModelBuilderTF2Test.test_unknown_meta_architecture
+[ RUN      ] ModelBuilderTF2Test.test_unknown_ssd_feature_extractor
+INFO:tensorflow:time(__main__.ModelBuilderTF2Test.test_unknown_ssd_feature_extractor): 0.0s
+I0103 19:17:24.324212 10040 test_util.py:1972] time(__main__.ModelBuilderTF2Test.test_unknown_ssd_feature_extractor): 0.0s
+[       OK ] ModelBuilderTF2Test.test_unknown_ssd_feature_extractor
+----------------------------------------------------------------------
+Ran 20 tests in 44.615s
+
+
+
+-THE END-

@@ -1,0 +1,28 @@
+item {
+  name: "Directional Sign"
+  id: 1
+}
+item {
+  name: "Mandatory Split Way"
+  id: 2
+}
+item {
+  name: "Prohibitory No Jaywalking"
+  id: 3
+}
+item {
+  name: "Prohibitory No Veh Over Height 4.5m"
+  id: 4
+}
+item {
+  name: "Temp Work Zone Sign"
+  id: 5
+}
+item {
+  name: "Warning Curve Right Alignment Marker"
+  id: 6
+}
+item {
+  name: "Warning Slow Speed"
+  id: 7
+}
