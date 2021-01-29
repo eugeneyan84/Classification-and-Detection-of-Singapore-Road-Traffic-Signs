@@ -60,7 +60,7 @@ Based on transfer-learning of 7 traffic signs on `ssd_mobilenet_v2_fpnlite_640x6
 
 # Object Detection Inference samples on Test Set
 
-**TAKE NOTE:** Red bounding box represents ground-truth, and is projected on top of predictions for visual comparison.
+**TAKE NOTE:** Red bounding box represents ground-truth, and is projected on top of predictions for visual comparison. 5th image shows a False Positive on the blue information sign.
 
 ![01](Images/test_set_object_detection_predictions/24_s_008260_with_prediction_48.jpg)
 
