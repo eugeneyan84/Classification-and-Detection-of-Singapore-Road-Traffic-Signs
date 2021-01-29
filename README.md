@@ -5,8 +5,11 @@ In the global automotive industry today, self-driving cars, also known as autono
 
 Not only is an AV expected to transport people and goods efficiently and safely from point-to-point, it must also comply with existing road regulations as what is expected of human drivers. One of the primary indicators of road regulations and information would be traffic signs. In Singapore, they range from the green directional signs that tell drivers about upcoming expressway exits, to warning signs that indicate potential elements of danger ahead, such as pedestrian crossings and school zones.
 
+## Motivation
+After getting my feet wet for a fair bit of time in the area of Machine Learning, I found myself being enamoured to the concept of enabling visual perception in machines to perform tasks that humans seem to do so effortlessly. This project allowed me to explore the domain of object detection, as well as the tools and frameworks that make solution implenmentation possible (with a fair bit of tinkering with environment setup). Beyond the scope of this completed project, it would continue to serve as a springboard for me to continuing exploring other areas of ML, such as data curation, model deployment and containerisation, etc. 
+
 ## Problem Statement
-This project is focused on the development both a classification model and an object-detection model to recognise road traffic signs in Singapore. While there are established datasets on traffic signs for countries like Germany and the U.S., there has not been one that is readily available and applicable to the signs found in Singapore. Hence there is a need to build a dataset of local traffic signs as a start, which would be sufficient to facilitate analysis, as well as aid the construction of classification and detection models that could recognise, as well as locate 1 or multiple traffic signs on a given image.
+This project is focused on the development of both a classification model and an object-detection model as a proof-of-concept to recognise road traffic signs in Singapore, using dash-cam footage frames as a primary source of data for model training. Presentation slides found [here](https://docs.google.com/presentation/d/1oP_C2UqkV98vld1O8dlGDH-y4eUMS_WDHJ6i_D-fRTk/edit?usp=sharing).
 
 ## Executive Summary
 
