@@ -30,7 +30,7 @@ This project is focused on the development of both a classification model and an
 ![7 traffic signs for object detection](Images/od_7_signs.jpg)
 </br>*Images from [Wikipedia](https://en.wikipedia.org/wiki/Road_signs_in_Singapore)*
 
-- Model training was carried out on Google Colab environment aided by GPU-acceleration, using Tensorflow Object Detection API. Training duration was approximately 3 hours, with overall loss reaching 0.093. Trained model was evaluated to have a **mAP score of 0.758**. Inference on 76 images from *test* set was completed with a mean inference time of 45ms per image.
+- Model training was carried out on Google Colab environment aided by GPU-acceleration, using Tensorflow Object Detection API. Training duration was approximately 3 hours, with overall loss reaching 0.093. Trained model was evaluated to have a **mAP score of 0.758**, based on COCO Detection Metrics. Inference on 76 images from *test* set was completed with a mean inference time of 45ms per image.
 
 - The *test* set inference images revealed that model was able to detect small traffic signs and large directional signs quite accurately. False positives surfaced in the form of untrained traffic signs being identified as at least 1 of the 7 classes the model was trained for. There were a few false negatives for small traffic signs, indicating there was room to improve the recall of the model.
 
@@ -43,20 +43,20 @@ This project is focused on the development of both a classification model and an
 
 # Object Detection Model Performance Table
 Based on transfer-learning of 7 traffic signs on `ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8` with pre-trained weights.
-| Metric | Area | Dets | Score
+| Metric | Area | maxDets | Score
 |-|-|-|-|
-|Average Precision  (AP) @[ IoU=0.50:0.95|area=all|maxDets=100|**0.758**|
-|Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 |0.924|
-|Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 | 0.880|
-|Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 | 0.300|
-|Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 | 0.787|
-|Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 | 0.708|
-|Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 | 0.717|
-|Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 | 0.814|
-|Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 | 0.814|
-|Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 | 0.600|
-|Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 | 0.818|
-|Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 | 0.867|
+|Average Precision  (AP) @ IoU=0.50:0.95|area=all|maxDets=100|**0.758**|
+|Average Precision  (AP) @ IoU=0.50      | area=   all | maxDets=100 |0.924|
+|Average Precision  (AP) @ IoU=0.75      | area=   all | maxDets=100 | 0.880|
+|Average Precision  (AP) @ IoU=0.50:0.95 | area= small | maxDets=100 | 0.300|
+|Average Precision  (AP) @ IoU=0.50:0.95 | area=medium | maxDets=100 | 0.787|
+|Average Precision  (AP) @ IoU=0.50:0.95 | area= large | maxDets=100 | 0.708|
+|Average Recall     (AR) @ IoU=0.50:0.95 | area=   all | maxDets=  1 | 0.717|
+|Average Recall     (AR) @ IoU=0.50:0.95 | area=   all | maxDets= 10 | 0.814|
+|Average Recall     (AR) @ IoU=0.50:0.95 | area=   all | maxDets=100 | 0.814|
+|Average Recall     (AR) @ IoU=0.50:0.95 | area= small | maxDets=100 | 0.600|
+|Average Recall     (AR) @ IoU=0.50:0.95 | area=medium | maxDets=100 | 0.818|
+|Average Recall     (AR) @ IoU=0.50:0.95 | area= large | maxDets=100 | 0.867|
 
 # Object Detection Inference samples on Test Set (Confidence Threshold >= 0.50)
 
