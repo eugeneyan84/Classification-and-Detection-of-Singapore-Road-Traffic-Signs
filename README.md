@@ -1,10 +1,14 @@
 # Classification and Detection of Singapore Road Traffic Signs
 
 ## Problem Statement
-Not only is an AV expected to transport people and goods efficiently and safely from point-to-point, it must also comply with existing road regulations as what is expected of human drivers. One of the primary indicators of road regulations and information would be traffic signs. In Singapore, they range from the green directional signs that tell drivers about upcoming expressway exits, to warning signs that indicate potential elements of danger ahead, such as pedestrian crossings and school zones. This project is focused on the development of both a classification model and an object-detection model as a proof-of-concept to recognise road traffic signs in Singapore, using dash-cam footage frames as a primary source of data for model training. Presentation slides found [here](https://docs.google.com/presentation/d/1oP_C2UqkV98vld1O8dlGDH-y4eUMS_WDHJ6i_D-fRTk/edit?usp=sharing).
+In the exciting domain of driverless systems, not only is an autonomous vehicle (abbreviated as AV) expected to transport people and goods efficiently and safely from point-to-point, it must also comply with existing road regulations as what is expected of human drivers. One of the primary indicators of road regulations and information would be traffic signs. In Singapore, they range from the green directional signs that tell drivers about upcoming expressway exits, to warning signs that indicate potential elements of danger ahead, such as pedestrian crossings and school zones. This project is focused on the development of both a classification model and an object-detection model as a proof-of-concept to recognise road traffic signs in Singapore, using dash-cam footage frames as a primary source of data for model training. 
+
+Presentation slides found [here](https://docs.google.com/presentation/d/1oP_C2UqkV98vld1O8dlGDH-y4eUMS_WDHJ6i_D-fRTk/edit?usp=sharing).
+
+Compiled reports can be viewed here: [Classification](https://nbviewer.jupyter.org/github/eugeneyan84/Classification-and-Detection-of-Singapore-Road-Traffic-Signs/blob/main/01_Classification_via_tensorflow_keras_api.ipynb), [Object Detection](https://nbviewer.jupyter.org/github/eugeneyan84/Classification-and-Detection-of-Singapore-Road-Traffic-Signs/blob/main/02_Object_detection_via_tensorflow_object_detection_api.ipynb), [Colab notebook for OD model training](https://nbviewer.jupyter.org/github/eugeneyan84/Classification-and-Detection-of-Singapore-Road-Traffic-Signs/blob/main/Colab_Notebook_for_Singapore_Road_Traffic_Signs_Detection_Model_Training_%28v2%29.ipynb)
 
 ## Motivation
-After getting my feet wet for a fair bit of time in the area of Machine Learning, I gained a strong interest in the concept of enabling visual perception in machines to perform tasks that humans seem to do so effortlessly. This project allowed me to explore the domain of computer vision, as well as the tools and frameworks that make solution implenmentation possible (after a fair bit of tinkering with environment setup of course). Beyond the scope of this completed project, it would continue to serve as a springboard for me to continuing exploring other areas of ML, such as data curation, image analytics, model deployment and containerisation, etc. 
+After getting my feet wet for a fair bit of time in the area of Machine Learning, I gained a strong interest in the concept of enabling visual perception in machines to perform tasks that humans seem to do so effortlessly. This project allowed me to explore the domain of computer vision, as well as the tools and frameworks that make solution implementation possible (after a fair bit of tinkering with environment setup of course). Beyond the scope of this completed project, it would continue to serve as a springboard for me to continuing exploring other areas of ML, such as data curation, image analytics, model deployment and containerisation, etc. 
 
 ## Executive Summary
 
@@ -21,7 +25,6 @@ After getting my feet wet for a fair bit of time in the area of Machine Learning
 - For the Object Detection dataset, it originally had 2554 annotations performed on 1560 images, across 57 classes of traffic signs. Class annotation was made possible by [LabelImg](https://github.com/tzutalin/labelImg), a lightweight annotation tool created by [Tzuta Lin](https://tzutalin.github.io/).
 
 - Due to class imbalance, only 7 traffic signs that have at least 100 obervations were selected for the scope of this project. They are *Directional Sign*,*Mandatory Split Way*, *Prohibitory No Jaywalking*, *Prohibitory No Veh Over Height 4.5m*, *Temp Work Zone Sign*, *Warning Curve Right Alignment Marker*, and *Warning Slow Speed*, resulting in 767 images remaining for modeling phase.
-
 ![7 traffic signs for object detection](Images/od_7_signs.jpg)
 </br>*Images from [Wikipedia](https://en.wikipedia.org/wiki/Road_signs_in_Singapore)*
 
